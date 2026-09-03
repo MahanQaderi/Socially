@@ -1,0 +1,320 @@
+@import "tailwindcss" source("../src");
+@custom-variant dark (&:where(.dark-mode, .dark-mode *));
+
+/* Vazirmatn, a variable font under the SIL Open Font License - one file covers
+   every weight the interface uses. See assets/fonts/OFL.txt */
+@font-face {
+  font-family: "Vazirmatn";
+  src: url("./assets/fonts/Vazirmatn-Variable.woff2") format("woff2-variations");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+
+/* a soft gradient ring that fades into its own tail instead of a hard border */
+.spinner,
+.spinner-mini,
+.spinner-xs {
+  display: inline-block;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: conic-gradient(from 90deg, transparent 5%, currentColor);
+  -webkit-mask: radial-gradient(
+    farthest-side,
+    transparent calc(100% - var(--ring)),
+    #000 calc(100% - var(--ring))
+  );
+  mask: radial-gradient(
+    farthest-side,
+    transparent calc(100% - var(--ring)),
+    #000 calc(100% - var(--ring))
+  );
+  animation: rotate 0.8s infinite linear;
+}
+
+.spinner {
+  --ring: 4px;
+  display: block;
+  margin: 3.2rem auto 1.6rem;
+  width: 46px;
+  color: rgb(var(--color-secondary-900));
+}
+.spinner-mini {
+  --ring: 2.5px;
+  width: 20px;
+  vertical-align: middle;
+}
+.spinner-xs {
+  --ring: 2px;
+  width: 16px;
+  vertical-align: middle;
+}
+
+@keyframes rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes popHeart {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.35);
+  }
+  70% {
+    transform: scale(0.92);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* animation helpers */
+.animate-fade-in {
+  animation: fadeIn 0.35s ease-out backwards;
+}
+.animate-fade-up {
+  animation: fadeUp 0.45s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
+.animate-scale-in {
+  animation: scaleIn 0.28s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
+.animate-pop {
+  animation: popHeart 0.4s ease-out;
+}
+
+/* small stagger so lists appear one after another */
+.stagger > * {
+  animation: fadeUp 0.45s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
+.stagger > *:nth-child(1) {
+  animation-delay: 0.04s;
+}
+.stagger > *:nth-child(2) {
+  animation-delay: 0.08s;
+}
+.stagger > *:nth-child(3) {
+  animation-delay: 0.12s;
+}
+.stagger > *:nth-child(4) {
+  animation-delay: 0.16s;
+}
+.stagger > *:nth-child(5) {
+  animation-delay: 0.2s;
+}
+.stagger > *:nth-child(n + 6) {
+  animation-delay: 0.24s;
+}
+
+/* light mode lifts a card with a soft shadow, dark mode lifts it by being lighter
+   than the page, because shadows barely read on a dark background */
+.shadow-card {
+  box-shadow:
+    0 1px 2px rgba(16, 24, 40, 0.04),
+    0 6px 16px -8px rgba(16, 24, 40, 0.1);
+}
+.dark-mode .shadow-card {
+  box-shadow: none;
+}
+
+.shadow-modal {
+  box-shadow: 0 24px 48px -12px rgba(16, 24, 40, 0.25);
+}
+.dark-mode .shadow-modal {
+  box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.75);
+}
+
+/* loading placeholder */
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.5rem;
+  background-color: rgb(var(--color-secondary-200), 0.7);
+}
+.skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background-image: linear-gradient(
+    90deg,
+    transparent,
+    rgb(var(--color-secondary-0), 0.35),
+    transparent
+  );
+  animation: shimmer 1.4s infinite;
+}
+
+@layer base {
+  :root {
+    &,
+    &.light-mode {
+      --background-app-rgb: 245, 246, 248;
+      --color-primary-900: 74, 109, 255;
+      --color-primary-800: 92, 124, 255;
+      --color-primary-700: 110, 138, 255;
+      --color-primary-600: 128, 153, 255;
+      --color-primary-500: 146, 167, 255;
+      --color-primary-400: 164, 182, 255;
+      --color-primary-300: 183, 197, 255;
+      --color-primary-200: 201, 211, 255;
+      --color-primary-100: 219, 226, 255;
+      --color-primary-50: 228, 233, 255;
+      --color-secondary-900: 17, 24, 39;
+      --color-secondary-800: 31, 41, 55;
+      --color-secondary-700: 55, 65, 81;
+      --color-secondary-600: 75, 85, 99;
+      --color-secondary-500: 107, 114, 128;
+      --color-secondary-400: 156, 163, 175;
+      --color-secondary-300: 209, 213, 219;
+      --color-secondary-200: 229, 231, 235;
+      --color-secondary-100: 243, 244, 246;
+      --color-secondary-50: 249, 250, 251;
+      --color-secondary-0: 255, 255, 255;
+      --color-success: 0, 192, 115;
+      --color-warning: 255, 153, 0;
+      --color-error: 255, 71, 87;
+      --color-red-500: 239, 68, 68;
+      --color-red-300: 252, 165, 165;
+      --color-disabled-bg: 237, 237, 237;
+      --color-disabled-text: 154, 154, 154;
+    }
+    &.dark-mode {
+      --background-app-rgb: 10, 10, 10;
+      --color-secondary-900: 249, 250, 251;
+      --color-secondary-800: 243, 244, 246;
+      --color-secondary-700: 229, 231, 235;
+      --color-secondary-600: 209, 213, 219;
+      --color-secondary-500: 156, 163, 175;
+      --color-secondary-400: 107, 114, 128;
+      --color-secondary-300: 75, 85, 99;
+      --color-secondary-200: 55, 65, 81;
+      --color-secondary-100: 31, 41, 55;
+      --color-secondary-50: 17, 24, 39;
+      --color-secondary-0: 24, 33, 47;
+      --backdrop-color: 0, 0, 0;
+      --color-disabled-bg: 31, 31, 31;
+      --color-disabled-text: 90, 90, 90;
+    }
+  }
+}
+
+
+/* these live in the base layer so tailwind classes can still override them */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    background-color: rgb(var(--background-app-rgb));
+  }
+
+  html,
+  body {
+    font-family:
+      "Vazirmatn",
+      system-ui,
+      -apple-system,
+      "Segoe UI",
+      sans-serif;
+    min-height: 100vh;
+    background-color: rgb(var(--background-app-rgb));
+  }
+
+  * {
+    box-sizing: border-box;
+    outline: none;
+  }
+
+  /* only the chrome stays unselectable, post/comment text can still be copied */
+  button,
+  nav,
+  header,
+  aside,
+  label {
+    user-select: none;
+  }
+
+  button {
+    cursor: pointer;
+    outline: none;
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease,
+      border-color 0.2s ease,
+      opacity 0.2s ease,
+      transform 0.15s ease;
+  }
+  button:active:not(:disabled) {
+    transform: scale(0.97);
+  }
+  button:disabled {
+    cursor: default;
+    pointer-events: none;
+    box-shadow: none;
+  }
+}
+
+/* a transitioned colour taken from a css variable keeps its old value when that
+   variable changes, so disabled buttons repaint straight away instead of animating.
+   this sits outside the layers so it also beats the transition-* utilities. */
+button:disabled {
+  transition: none;
+}
+
+/* keyboard users still get a visible focus ring */
+:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

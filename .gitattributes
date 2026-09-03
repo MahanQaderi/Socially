@@ -1,0 +1,14 @@
+# normalise line endings in the repository so diffs stay clean across machines
+* text=auto eol=lf
+
+# never touch binary assets
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.gif  binary
+*.ico  binary
+*.svg  text
+*.ttf  binary
+*.woff binary
+*.woff2 binary
+*.pdf  binary

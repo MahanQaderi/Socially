@@ -1,0 +1,45 @@
+# --- dependencies ---
+node_modules
+/.pnp
+.pnp.*
+
+# --- build output ---
+dist
+dist-ssr
+build
+.next/
+out/
+*.local
+
+# --- secrets, never commit these ---
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+next-env.d.ts
+
+# --- logs ---
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# --- typescript / tooling caches ---
+*.tsbuildinfo
+coverage
+.vercel
+
+# --- editors and os ---
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
