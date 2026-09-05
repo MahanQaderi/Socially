@@ -77,7 +77,11 @@ export default function Header({ isSessionLoading }: HeaderProps) {
             </NavLink>
           </div>
 
-          {isAuthenticated && <UserSearch />}
+          {/* on mobile the search lives in the sidebar, otherwise it sits on top
+              of the logo and the menu button */}
+          {isAuthenticated && (
+            <UserSearch className="mx-2 hidden w-full min-w-0 max-w-72 shrink sm:mx-4 md:block" />
+          )}
 
           <nav className="flex min-w-0 flex-1 items-center justify-end gap-2 md:gap-5">
             <button

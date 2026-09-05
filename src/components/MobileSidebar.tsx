@@ -9,6 +9,7 @@ import { useAuthStore } from "../store/authStore";
 import { splitUsername } from "../utils/splitUsername";
 import { useGetAllNotifications } from "../hooks/useGetAllNotification";
 import type { NotificationTypes } from "../types/NotificationTypes";
+import UserSearch from "./Ui/UserSearch";
 
 interface sidebarProps {
   isOpen: boolean;
@@ -58,8 +59,11 @@ export default function MobileSidebar(props: sidebarProps) {
     }
   };
 
+  const itemClass =
+    "w-full h-9 flex items-center justify-center gap-2 cursor-pointer rounded-md px-3 py-2 transition-all duration-200";
+
   const linkClass = ({ isActive }: { isActive: boolean }) =>
-    `w-3/4 h-9 flex items-center justify-center gap-2 cursor-pointer rounded-md px-3 py-2 transition-all duration-200 ${
+    `${itemClass} ${
       isActive
         ? "bg-[#E5E5E5] font-medium dark:bg-[#262626]"
         : "hover:bg-[#eeeeee] hover:scale-105 dark:bg-[#1F1F1F] dark:hover:bg-[#262626]"
@@ -85,9 +89,14 @@ export default function MobileSidebar(props: sidebarProps) {
           />
         </div>
 
-        <div className=" w-full flex flex-col items-center justify-center bg-white dark:bg-transparent">
+        <div className="w-full flex flex-col bg-transparent">
           {isAuthenticated ? (
-            <div className=" w-full flex flex-col items-center justify-around gap-10 h-9 bg-transparent dark:bg-transparent">
+            <div className="w-full flex flex-col items-center gap-2">
+              <UserSearch
+                className="mb-2 w-full min-w-0"
+                onSubmitted={handleCloseSidebar}
+              />
+
               <NavLink to={"/"} end onClick={handleCloseSidebar} className={linkClass}>
                 <p className="text-[14px] text-[#171717] dark:text-[#FAFAFA]">
                   Home
@@ -129,9 +138,10 @@ export default function MobileSidebar(props: sidebarProps) {
                 />
               </NavLink>
 
-              <div
+              <button
+                type="button"
                 onClick={handleLogout}
-                className="w-full h-9 items-center justify-center gap-2 cursor-pointer hover:bg-[#eeeeee] rounded-md py-2 transition-colors duration-200 dark:hover:bg-[#262626] flex"
+                className={`${itemClass} hover:bg-[#eeeeee] dark:bg-[#1F1F1F] dark:hover:bg-[#262626]`}
               >
                 <p className="text-[14px] text-[#171717] dark:text-[#FAFAFA]">
                   Logout
@@ -141,10 +151,10 @@ export default function MobileSidebar(props: sidebarProps) {
                 ) : (
                   <LogOut size={16} className="dark:text-[#FAFAFA]" />
                 )}
-              </div>
+              </button>
             </div>
           ) : (
-            <div className=" w-full flex flex-col items-center justify-around gap-5 pt-3 h-9 bg-transparent dark:bg-transparent">
+            <div className="w-full flex flex-col items-center gap-2">
               <NavLink to={"/"} end onClick={handleCloseSidebar} className={linkClass}>
                 <p className="text-[14px] text-[#171717] dark:text-[#FAFAFA]">
                   Home
@@ -173,9 +183,6 @@ export default function MobileSidebar(props: sidebarProps) {
                 </p>
                 <BookPlus size={16} className="dark:text-[#FAFAFA]" />
               </NavLink>
-
-
-
             </div>
           )}
         </div>

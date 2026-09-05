@@ -2,7 +2,12 @@ import { Search } from "lucide-react";
 import { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router";
 
-export default function UserSearch() {
+type UserSearchProps = {
+  className?: string;
+  onSubmitted?: () => void;
+};
+
+export default function UserSearch({ className = "", onSubmitted }: UserSearchProps) {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
@@ -16,13 +21,11 @@ export default function UserSearch() {
     if (!value) return;
 
     navigate(`/search?q=${encodeURIComponent(value)}`);
+    onSubmitted?.();
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="mx-2 w-full min-w-0 max-w-72 shrink sm:mx-4"
-    >
+    <form onSubmit={handleSubmit} className={className}>
       <div
         className="
           flex h-9 items-center
